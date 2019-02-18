@@ -66,4 +66,7 @@ html {
 
 .card-container {
   display: flex;
-  justify-content: space-around; }
+  justify-content: space-around;
+  padding-bottom: 2rem;
+  border-bottom: 3px solid #fff;
+  box-shadow: 0 1rem 4rem rgba(9, 96, 228, 0.562); }

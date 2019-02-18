@@ -1,0 +1,27 @@
+////////////////////////////////
+// BACKGROUND
+
+.container-background {
+	background-image: url('/img/background.jpg');
+	width: 100vw;
+	height: 100vh;
+	background-size: cover;
+}
+
+////////////////////////////////
+// HEADER
+
+.header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 5rem;
+}
+
+////////////////////////////////
+// CARDS
+
+.card-container {
+	display: flex;
+	justify-content: space-around;
+}

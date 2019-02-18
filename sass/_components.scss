@@ -1,0 +1,47 @@
+////////////////////////////
+// HEADING
+
+.heading-primary {
+	font-family: 'Star Wars';
+	color: #fff;
+	font-size: 5rem;
+}
+
+.heading-secondary {
+	font-family: 'Star Wars';
+	color: #fff;
+	font-size: 1.4rem;
+}
+
+////////////////////////////
+// CARDS
+
+.card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background-color: #959595;
+	width: 13rem;
+	height: 13rem;
+	border-radius: 20px;
+	transition: all 0.4s;
+	cursor: pointer;
+
+	&:hover {
+		transform: translateY(-3px);
+		box-shadow: 0.2rem 1rem 4rem rgba(9, 96, 228, 0.562);
+	}
+
+	&:active {
+		transform: translateY(2px);
+		box-shadow: 0.2rem 0.8rem 2rem rgba(9, 96, 228, 0.562);
+	}
+
+	&__icon {
+		height: 5rem;
+		width: 5rem;
+		margin-bottom: 1rem;
+	}
+}

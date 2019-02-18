@@ -1,0 +1,69 @@
+@font-face {
+  font-family: 'Star Wars';
+  src: url("/fonts/starjedi/Starjedi.ttf"); }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*:after,
+*::before {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  /* 10px/16px(browser default) = 62.5% */ }
+
+::selection {
+  user-select: none; }
+
+.heading-primary {
+  font-family: 'Star Wars';
+  color: #fff;
+  font-size: 5rem; }
+
+.heading-secondary {
+  font-family: 'Star Wars';
+  color: #fff;
+  font-size: 1.4rem; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #959595;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 20px;
+  transition: all 0.4s;
+  cursor: pointer; }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0.2rem 1rem 4rem rgba(9, 96, 228, 0.562); }
+  .card:active {
+    transform: translateY(2px);
+    box-shadow: 0.2rem 0.8rem 2rem rgba(9, 96, 228, 0.562); }
+  .card__icon {
+    height: 5rem;
+    width: 5rem;
+    margin-bottom: 1rem; }
+
+.container-background {
+  background-image: url("/img/background.jpg");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover; }
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5rem; }
+
+.card-container {
+  display: flex;
+  justify-content: space-around; }

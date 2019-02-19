@@ -27,7 +27,8 @@ html {
 .heading-secondary {
   font-family: 'Star Wars';
   color: #fff;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  padding-bottom: 0.7rem; }
 
 .card {
   display: flex;
@@ -52,6 +53,23 @@ html {
     width: 5rem;
     margin-bottom: 1rem; }
 
+.content-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #959595;
+  border-radius: 20px;
+  padding: 2rem; }
+  .content-card__description {
+    font-size: 1.1rem;
+    font-family: 'Star Wars';
+    color: #000; }
+    .content-card__description:not(:last-child) {
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid #000; }
+
 .container-background {
   background-image: url("/img/background.jpg");
   width: 100vw;
@@ -68,5 +86,10 @@ html {
   display: flex;
   justify-content: space-around;
   padding-bottom: 2rem;
-  border-bottom: 3px solid #fff;
-  box-shadow: 0 1rem 4rem rgba(9, 96, 228, 0.562); }
+  border-bottom: 3px solid #fff; }
+
+.section-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 15rem; }

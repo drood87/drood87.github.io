@@ -22,10 +22,24 @@ function getPlanetData() {
         data.results.map(arr => {
           const { name, population, diameter } = arr; // destructure into own variables
           createTextContent(name, population, diameter); // pass as arguments into function
+          console.log(arr.next);
         });
       })
       .catch(err => console.error(err))
   );
+
+  // fetch('https://swapi.co/api/planets').then(data =>
+  //   data
+  //     .json()
+  //     .then(data => {
+  //       data.results.map(arr => {
+  //         arr.next;
+  //         const { name, population, diameter } = arr; // destructure into own variables
+  //         createTextContent(name, population, diameter); // pass as arguments into function
+  //       });
+  //     })
+  //     .catch(err => console.error(err))
+  // );
 
   // return planetData;
 }
@@ -41,17 +55,18 @@ function getSpeciesData() {
 
 function createTextContent(name, population, diameter) {
   const div = document.createElement('div');
+  // console.log(!div.hasChildNodes());
+
   div.classList.add('content-card');
-
   div.innerHTML = `<h2 class="heading-secondary">Name</h2>
-                   <p class="content-card__description">${name}</p>
-                   <h2 class="heading-secondary">Population</h2>
-                   <p class="content-card__description">${population}</p>
-                   <h2 class="heading-secondary">Diameter</h2>
-                   <p class="content-card__description">${diameter}</p>`;
-
+      <p class="content-card__description">${name}</p>
+      <h2 class="heading-secondary">Population</h2>
+      <p class="content-card__description">${population}</p>
+      <h2 class="heading-secondary">Diameter</h2>
+      <p class="content-card__description">${diameter}</p>`;
   sectionDiv.appendChild(div);
-  console.log(div.nodeValue);
+
+  // console.log(sectionDiv.hasChildNodes());
 }
 
 peopleCard.addEventListener('click', getPeopleData);

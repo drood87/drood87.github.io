@@ -22,24 +22,28 @@ function getPlanetData() {
         data.results.map(arr => {
           const { name, population, diameter } = arr; // destructure into own variables
           createTextContent(name, population, diameter); // pass as arguments into function
-          console.log(arr.next);
         });
       })
       .catch(err => console.error(err))
   );
 
-  // fetch('https://swapi.co/api/planets').then(data =>
-  //   data
-  //     .json()
-  //     .then(data => {
-  //       data.results.map(arr => {
-  //         arr.next;
-  //         const { name, population, diameter } = arr; // destructure into own variables
-  //         createTextContent(name, population, diameter); // pass as arguments into function
-  //       });
-  //     })
-  //     .catch(err => console.error(err))
-  // );
+  fetch('https://swapi.co/api/planets').then(data =>
+    data
+      .json()
+      .then(data => fetch(data.next))
+      .then(data =>
+        data
+          .json()
+          .then(data => {
+            data.results.map(arr => {
+              const { name, population, diameter } = arr; // destructure into own variables
+              createTextContent(name, population, diameter); // pass as arguments into function
+            });
+          })
+
+          .catch(err => console.error(err))
+      )
+  );
 
   // return planetData;
 }

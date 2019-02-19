@@ -61,7 +61,8 @@ html {
   text-align: center;
   background-color: #959595;
   border-radius: 20px;
-  padding: 2rem; }
+  padding: 2rem;
+  margin-left: 5rem; }
   .content-card__description {
     font-size: 1.1rem;
     font-family: 'Star Wars';

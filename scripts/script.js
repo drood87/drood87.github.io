@@ -2,75 +2,50 @@ const peopleCard = document.querySelector('#people');
 const planetCard = document.querySelector('#planets');
 const speciesCard = document.querySelector('#species');
 const sectionDiv = document.querySelector('#contentHook');
+const planetApiPoint = 'https://swapi.co/api/planets';
 
-function getPeopleData() {
-  const peopleProm = fetch('https://swapi.co/api/people');
-  const peopleData = peopleProm.then(data => data.json());
-  const peopleNames = peopleData.then(data => data.results);
-  const test = peopleNames
-    .then(data => data.map())
-    .then(data => console.log(data.name));
-
-  console.log(test);
-}
-
-function getPlanetData() {
-  // fetch('https://swapi.co/api/planets').then(data =>
-  //   data
-  //     .json()
-  //     .then(data => {
-  //       console.log(data); // data returns all methods, data.next method would fetch next page
-  //       data.results.map(arr => {
-  //         const { name, population, diameter } = arr; // destructure into own variables
-  //         createTextContent(name, population, diameter); // pass as arguments into function
-  //       });
-  //     })
-  //     .catch(err => console.error(err))
-  // );
-
-  fetch('https://swapi.co/api/planets').then(data =>
-    data.json().then(data => {
-      if (data.next != null) {
-        fetch(data.next).then(data =>
-          data.json().then(data => console.log(data))
-        );
-      }
+function planets() {
+  fetch(planetApiPoint).then(response =>
+    response.json().then(rawData => {
+      nextPageCheck(rawData.next); //url to next page
+      filterData(rawData.results); //array with planets
     })
   );
-
-  // fetch('https://swapi.co/api/planets').then(data =>
-  //   data
-  //     .json()
-  //     .then(data => fetch(data.next))
-  //     .then(data =>
-  //       data
-  //         .json()
-  //         .then(data => {
-  //           data.results.map(arr => {
-  //             const { name, population, diameter } = arr; // destructure into own variables
-  //             createTextContent(name, population, diameter); // pass as arguments into function
-  //           });
-  //         })
-
-  //         .catch(err => console.error(err))
-  //     )
-  // );
-
-  // return planetData;
 }
 
-function getSpeciesData() {
-  const species = fetch('https://swapi.co/api/species').then(data =>
-    data
-      .json()
-      .then(data => console.log(data))
-      .catch(err => console.error(err))
-  );
+function filterData(data) {
+  data.map(planets => {
+    const { name, population, diameter } = planets;
+    createTextContent(name, population, diameter);
+  });
 }
+
+function nextPageCheck(pageCheck) {
+  if (pageCheck != null) {
+    console.log(pageCheck);
+  }
+}
+
+// function checkNextApiPage(data) {
+//   fetch(data).then(data =>
+//     data.json().then(dataNew => {
+//       checkIfMorePages(dataNew);
+//       dataNew.results.map(results => {
+//         const { name, population, diameter } = results; //destructuring items into own variables
+//         createTextContent(name, population, diameter);
+//       });
+//     })
+//   );
+// }
+
+// function checkIfMorePages(dataNew) {
+//   if (dataNew.next != null) {
+//     checkNextApiPage(dataNew.next);
+//   }
+// }
 
 function createTextContent(name, population, diameter) {
   const div = document.createElement('div');
-  // console.log(!div.hasChildNodes());
 
   div.classList.add('content-card');
   div.innerHTML = `<h2 class="heading-secondary">Name</h2>
@@ -80,10 +55,8 @@ function createTextContent(name, population, diameter) {
       <h2 class="heading-secondary">Diameter</h2>
       <p class="content-card__description">${diameter}</p>`;
   sectionDiv.appendChild(div);
-
-  // console.log(sectionDiv.hasChildNodes());
 }
 
-peopleCard.addEventListener('click', getPeopleData);
-planetCard.addEventListener('click', getPlanetData);
-speciesCard.addEventListener('click', getSpeciesData);
+// peopleCard.addEventListener('click', getPeopleData);
+planetCard.addEventListener('click', planets);
+// speciesCard.addEventListener('click', getSpeciesData);

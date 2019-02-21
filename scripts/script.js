@@ -5,7 +5,17 @@ const sectionDiv = document.querySelector('#contentHook');
 const planetApiPoint = 'https://swapi.co/api/planets';
 
 function planets() {
-  fetch(planetApiPoint).then(response =>
+  fetch('https://swapi.co/api/planets').then(response =>
+    response.json().then(rawData => {
+      nextPageCheck(rawData.next); //url to next page
+      filterData(rawData.results); //array with planets
+    })
+  );
+}
+
+function nextPageData(nextPage) {
+  console.log(nextPage);
+  fetch(nextPage).then(response =>
     response.json().then(rawData => {
       nextPageCheck(rawData.next); //url to next page
       filterData(rawData.results); //array with planets
@@ -14,6 +24,7 @@ function planets() {
 }
 
 function filterData(data) {
+  console.log(data);
   data.map(planets => {
     const { name, population, diameter } = planets;
     createTextContent(name, population, diameter);
@@ -22,27 +33,9 @@ function filterData(data) {
 
 function nextPageCheck(pageCheck) {
   if (pageCheck != null) {
-    console.log(pageCheck);
+    nextPageData(pageCheck);
   }
 }
-
-// function checkNextApiPage(data) {
-//   fetch(data).then(data =>
-//     data.json().then(dataNew => {
-//       checkIfMorePages(dataNew);
-//       dataNew.results.map(results => {
-//         const { name, population, diameter } = results; //destructuring items into own variables
-//         createTextContent(name, population, diameter);
-//       });
-//     })
-//   );
-// }
-
-// function checkIfMorePages(dataNew) {
-//   if (dataNew.next != null) {
-//     checkNextApiPage(dataNew.next);
-//   }
-// }
 
 function createTextContent(name, population, diameter) {
   const div = document.createElement('div');

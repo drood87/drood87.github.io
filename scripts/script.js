@@ -3,9 +3,15 @@ const planetCard = document.querySelector('#planets');
 const speciesCard = document.querySelector('#species');
 const sectionDiv = document.querySelector('#contentHook');
 const planetApiPoint = 'https://swapi.co/api/planets';
+const peopleApiPoint = 'https://swapi.co/api/people/';
+const speciesApiPoint = 'https://swapi.co/api/species/';
 
 function planets() {
-  fetch('https://swapi.co/api/planets').then(response =>
+  sectionDiv.innerHTML = '';
+
+  fetch(planetApiPoint).then((
+    response // initial API call for 1st page
+  ) =>
     response.json().then(rawData => {
       nextPageCheck(rawData.next); //url to next page
       filterData(rawData.results); //array with planets

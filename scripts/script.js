@@ -46,21 +46,28 @@ function nextPageCheck(pageCheck) {
 }
 
 async function peopleData() {
-  const peoplePromise = await fetch(peopleApiPoint).then(r => r.json());
+  const peoplesArr = await fetch(peopleApiPoint).then(res => res.json());
 
-  peoplePromise.results.map(res => {
-    const { name, homeworld, birth_year } = res;
+  peoplesArr.results.map(async res => {
+    const { name, birth_year } = res; // quickly destructure the values into respective variables
+    const homeworld = res.homeworld; // homeworld key holds another url
+    const data = await peopleHomeworld();
+    console.log(name, birth_year, data);
 
-    async function getPlanet() {
-      const planetPromise = await fetch(homeworld).then(r => r.json());
-      const planetName = planetPromise.name;
-      console.log(planetName);
-      return planetName;
-    }
-
+    async function peopleHomeworld() {
+      // make another async function that resolves the next  API call to that URL to get the value
+      const peopleHomeworld = await fetch(homeworld).then(r => r.json()); // resolve promise and return object with data
+      const homeworldName = await peopleHomeworld.name; // store the data from the object in own variable
+      // console.log(homeworldName, `name`); // homeworldName is actually resolved
+      return await homeworldName; // this variable will hold the value I want in that function
+    } // upon trying to call the function it will show another promise but not my return value
   });
-  const finalData = await Promise.all([peoplePromise, getPlanet()]);
-  console.log(finalData);
+}
+
+async function getSpeciesData() {
+  const species = await fetch(speciesApiPoint).then(r => r.json());
+
+  console.log(species.results);
 }
 
 function createTextContent(name, population, diameter) {
@@ -78,4 +85,4 @@ function createTextContent(name, population, diameter) {
 
 peopleCard.addEventListener('click', peopleData);
 planetCard.addEventListener('click', planets);
-// speciesCard.addEventListener('click', getSpeciesData);
+speciesCard.addEventListener('click', getSpeciesData);

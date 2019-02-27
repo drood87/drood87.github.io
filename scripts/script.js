@@ -45,35 +45,59 @@ function nextPageCheck(pageCheck) {
   }
 }
 
+// ===================================================================================
+// Above example with fetch().then API
+// Bottom code is written in async/await syntax.
+// Used both methods for training purposes
+// ===================================================================================
+
 // get Data from people API fetch call
 async function peopleData() {
   sectionDiv.innerHTML = '';
   const peoplesArr = await fetch(peopleApiPoint).then(res => res.json());
 
-  peoplesArr.results.map(async res => {
+  getResultsDataPeople(peoplesArr.results);
+  checkForNextPagePeople(peoplesArr.next);
+}
+
+async function getResultsDataPeople(results) {
+  results.map(async res => {
     // homeworld will return an URL that needs to be resolved in different function
-    const { name, birth_year, homeworld, next } = res;
+
+    const { name, birth_year, homeworld } = res;
 
     // call the reference to the function
     //that returns the resolved promise of the name of homeworld
     const homeworldName = await nameHomeworld(homeworld);
+
     createTextContentPeople(name, birth_year, homeworldName);
   });
 }
 
 //get Data from Species fetch API call
 async function getSpeciesData() {
-  sectionDiv.innerHTML = '';
-  const species = await fetch(speciesApiPoint).then(r => r.json());
+  try {
+    sectionDiv.innerHTML = '';
+    const species = await fetch(speciesApiPoint).then(r => r.json());
 
-  species.results.map(async res => {
+    getResultsDataSpecies(species.results);
+    checkForNextPageSpecies(species.next);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function getResultsDataSpecies(results) {
+  results.map(async res => {
     // homeworld will return an URL that needs to be resolved in different function
+
     const { name, designation, homeworld } = res;
 
     // call the reference to the function
     //that returns the resolved promise of the name of homeworld
     const homeworldName = await nameHomeworld(homeworld);
-    createTextContentSpecies(homeworldName, name, designation);
+
+    createTextContentSpecies(name, homeworldName, designation);
   });
 }
 
@@ -84,6 +108,26 @@ async function nameHomeworld(homeworld) {
   const homeworldName = await homeworldPromise.name; // store the data from the object in own variable
 
   return homeworldName; // this variable will hold the value I want in that function
+}
+
+// function to test if json file has more than one page
+
+async function checkForNextPagePeople(next) {
+  // last page has a value of null so we check if the next method returns null.. if not we rinse repeat the function
+  if (next != null) {
+    const getResults = await fetch(next).then(res => res.json());
+    checkForNextPagePeople(getResults.next);
+    getResultsDataPeople(getResults.results);
+  }
+}
+
+async function checkForNextPageSpecies(next) {
+  // last page has a value of null so we check if the next method returns null.. if not we rinse repeat the function
+  if (next != null) {
+    const getResults = await fetch(next).then(res => res.json());
+    checkForNextPageSpecies(getResults.next);
+    getResultsDataSpecies(getResults.results);
+  }
 }
 
 function createTextContentPeople(name, birth_year, homeworldName) {
@@ -112,7 +156,7 @@ function createTextContentPlanet(name, population, diameter) {
   sectionDiv.appendChild(div);
 }
 
-function createTextContentSpecies(homeworldName, name, designation) {
+function createTextContentSpecies(name, homeworldName, designation) {
   const div = document.createElement('div');
 
   div.classList.add('content-card');

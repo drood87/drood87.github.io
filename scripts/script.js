@@ -130,6 +130,8 @@ async function checkForNextPageSpecies(next) {
   }
 }
 
+// .createElements would be better, but for the sake of the exercise I use .innerHTML to render my output
+
 function createTextContentPeople(name, birth_year, homeworldName) {
   const div = document.createElement('div');
 
